@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Περιλήψεις Προσφορών Ανελκυστήρα / Elevator Offer Summaries</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; }
+        .lang-el-text, .lang-en-text { display: none; }
+        .lang-el-text.active, .lang-en-text.active { display: block; }
+        .lang-el-text.active-inline, .lang-en-text.active-inline { display: inline; }
+
+        .lang-button {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border: 1px solid transparent;
+        }
+        .lang-button.active {
+            background-color: #007FFF; /* Tailwind blue-500 */
+            color: white;
+            border-color: #005FCC; /* Darker blue for active border */
+        }
+        .lang-button:not(.active) {
+            background-color: #E5E7EB; /* Tailwind gray-200 */
+            color: #374151; /* Tailwind gray-700 */
+            border-color: #D1D5DB; /* Tailwind gray-300 */
+        }
+        .lang-button:not(.active):hover {
+            background-color: #D1D5DB; /* Tailwind gray-300 */
+        }
+        .summary-section {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .summary-section h2 {
+            font-size: 1.75rem; /* text-2xl */
+            font-weight: 700;
+            color: #FF8C00; /* Secondary Orange */
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #FF8C00;
+        }
+        .summary-section h3 {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600;
+            color: #007FFF; /* Primary Blue */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .summary-section ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .summary-section li {
+            margin-bottom: 0.25rem;
+        }
+        .summary-section p {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        .page-title {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700;
+            color: #007FFF; /* Primary Blue */
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 antialiased">
+    <div class="container mx-auto p-4 md:p-8">
+        <div class="flex justify-between items-center mb-8">
+            <div class="page-title">
+                <span class="lang-el-text active">Περιλήψεις Προσφορών Ανελκυστήρα</span>
+                <span class="lang-en-text">Elevator Offer Summaries</span>
+            </div>
+            <div id="lang-switcher" class="flex space-x-2">
+                <button id="lang-el-btn" class="lang-button active">ΕΛ</button>
+                <button id="lang-en-btn" class="lang-button">EN</button>
+            </div>
+        </div>
+
+        <div id="summaries-container">
+            </div>
+
+        <footer class="text-center mt-12 py-6 border-t border-gray-300">
+            <p class="text-gray-600 text-sm">
+                <span class="lang-el-text active-inline">Πληροφορίες από το έγγραφο: </span>
+                <span class="lang-en-text active-inline">Information from document: </span>
+                <em id="document-source-name"></em>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        let currentLanguage = 'el';
+
+        const offerSummariesData = [
+            {
+                id: "aivazoglou",
+                companyName_el: "S. AIVAZOGLOU ELEVATORS (ΣΕΡΑΦΕΙΜ Β. ΑΪΒΑΖΟΓΛΟΥ)",
+                companyName_en: "S. AIVAZOGLOU ELEVATORS (SERAFEIM V. AIVAZOGLOU)",
+                content_el: `
+                    <h3>Συνολική Αξία Προσφοράς</h3>
+                    <p>€7,316.00 (συμπεριλαμβανομένου ΦΠΑ 24%).</p>
+                    <p><em>Σημείωση: Η αξία αυτή μπορεί να μειωθεί σε €7,006.00 (συμπεριλαμβανομένου ΦΠΑ 24%) εάν υπάρχει ήδη τεχνικός φάκελος για τον ανελκυστήρα, καθώς θα αφαιρεθούν €250 + 24% ΦΠΑ (€310 συνολικά) από την αρχική τιμή.</em></p>
+
+                    <h3>Αναλυτική Περιγραφή Τιμών που Περιλαμβάνονται στην Προσφορά</h3>
+                    <p>Το κύριο κόστος για τις 27 αναφερόμενες εργασίες πιστοποίησης και αναβάθμισης είναι €5,900.00 + 24% ΦΠΑ, με αποτέλεσμα το συνολικό ποσό των €7,316.00.</p>
+
+                    <h3>Εργασίες που Περιλαμβάνονται στην Προσφορά</h3>
+                    <ul>
+                        <li>Λήψη αντιγράφου της άδειας λειτουργίας. Εάν δεν υπάρχει, δημιουργία τεχνικού φακέλου.</li>
+                        <li>Τοποθέτηση όλων των προβλεπόμενων σημάνσεων ασφαλείας (χωρίς χρέωση).</li>
+                        <li>Καθαρισμός οροφής θαλάμου, πυθμένα φρεατίου, μηχανοστασίου και τροχαλιοστασίου (χωρίς χρέωση).</li>
+                        <li>Τοποθέτηση καλύμματος και πείρων μη εκτροπής των συρματόσχοινων.</li>
+                        <li>Σήμανση της κατεύθυνσης του ανελκυστήρα και χρωματισμός συρματόσχοινων (χωρίς χρέωση).</li>
+                        <li>Αντικατάσταση φθαρμένων συρματόσχοινων ανάρτησης, κώνων και σφιγκτήρων.</li>
+                        <li>Στεγανοποίηση της μηχανής.</li>
+                        <li>Επισκευή της τροχαλίας της μηχανής.</li>
+                        <li>Αντικατάσταση του πίνακα ελέγχου με νέο πίνακα μικροεπεξεργαστή IKAROS με inverter.</li>
+                        <li>Εγκατάσταση νέου εύκαμπτου καλωδίου και αντικατάσταση παλαιών διακοπτών ορόφων.</li>
+                        <li>Χαρακτηριστικά νέου πίνακα: ανεξάρτητη ρύθμιση στάσης, διάγνωση βλαβών στα ελληνικά, λειτουργία πυρασφάλειας, κ.ά.</li>
+                        <li>Εγκατάσταση μπουτόν στοπ τύπου μανιτάρι κοντά στον κινητήρα.</li>
+                        <li>Αντικατάσταση κλειδαριών με νέου τύπου.</li>
+                        <li>Εγκατάσταση προσκρουστήρων θαλάμου και αντιβάρου.</li>
+                        <li>Εγκατάσταση τηλεφωνικής συσκευής στον θάλαμο.</li>
+                        <li>Εγκατάσταση λαμαρίνας αντιβάρου.</li>
+                        <li>Εγκατάσταση μπουτόν στοπ τύπου μανιτάρι στον πυθμένα του φρεατίου.</li>
+                        <li>Αποκατάσταση φωτισμού φρεατίου.</li>
+                        <li>Καθαρισμός και ρύθμιση της αρπάγης (εάν ρυθμίζεται).</li>
+                        <li>Εγκατάσταση ποδιάς με αντιρίδες στον θάλαμο.</li>
+                        <li>Εγκατάσταση νέας ρεβιζιόν στην οροφή του θαλάμου.</li>
+                        <li>Αντικατάσταση του αρθρωτού συνδέσμου στην οροφή του θαλάμου.</li>
+                        <li>Αντικατάσταση του ρυθμιστή ταχύτητας.</li>
+                        <li>Αντικατάσταση τερματικών διακοπτών διαδρομής.</li>
+                        <li>Αποκατάσταση λειτουργίας κουδουνιού.</li>
+                        <li>Εγκατάσταση φωτιστικού ασφαλείας στον θάλαμο.</li>
+                        <li>Αντικατάσταση της ρεβιζιόν του τροχαλιοστασίου.</li>
+                        <li>Αποκατάσταση φωτισμού τροχαλιοστασίου.</li>
+                        <li>Επιθεώρηση από φορέα πιστοποίησης για την έκδοση πιστοποιητικού.</li>
+                    </ul>
+
+                    <h3>Προαιρετικές Εργασίες και Τιμές</h3>
+                    <ul>
+                        <li>Εγκατάσταση αυτόματου συστήματος απεγκλωβισμού: €380.00 + 24% ΦΠΑ = <strong>€471.20</strong>.</li>
+                        <li>Εγκατάσταση αυτόματης πόρτας θαλάμου τύπου bus: €750.00 + 24% ΦΠΑ = <strong>€930.00</strong>.</li>
+                        <li>Αφαίρεση υπάρχοντος θαλάμου και εγκατάσταση νέου θαλάμου "ΚΙΡΚΗ": €1,800.00 + 24% ΦΠΑ = <strong>€2,232.00</strong>.</li>
+                        <li>Αντικατάσταση εξωτερικών μπουτονιέρων: €470.00 + 24% ΦΠΑ = <strong>€582.80</strong>.</li>
+                        <li>Αντικατάσταση μπουτονιέρας θαλάμου: €420.00 + 24% ΦΠΑ = <strong>€520.80</strong>.</li>
+                    </ul>
+
+                    <h3>Άλλες Πληροφορίες</h3>
+                    <ul>
+                        <li>Μηνιαία συντήρηση, επίβλεψη και ασφάλιση: €43.00 (συμπεριλαμβανομένου ΦΠΑ).</li>
+                        <li>Εγγύηση: 5 έτη (υπό την προϋπόθεση συντήρησης από την εταιρεία τους).</li>
+                        <li>Πληρωμή: 50% προκαταβολή, 50% σε 4 ισόποσες μηνιαίες δόσεις.</li>
+                    </ul>
+                `,
+                content_en: `
+                    <h3>Total Value of the Offer</h3>
+                    <p>€7,316.00 (including 24% VAT).</p>
+                    <p><em>Note: This can be reduced to €7,006.00 (including 24% VAT) if a technical folder for the elevator already exists, as €250 + 24% VAT (€310 total) will be deducted from the base price.</em></p>
+
+                    <h3>Analytic Description of Prices Included in the Offer</h3>
+                    <p>The primary cost for the 27 listed certification and upgrade works is €5,900.00 + 24% VAT, resulting in the total of €7,316.00.</p>
+
+                    <h3>Works Included in the Offer</h3>
+                    <ul>
+                        <li>Obtaining a copy of the operating license. If unavailable, creation of a technical file.</li>
+                        <li>Placement of all required safety markings (free of charge).</li>
+                        <li>Cleaning of cabin roof, pit bottom, machine room, and pulley room (free of charge).</li>
+                        <li>Installation of cover and anti-derailment pins for ropes.</li>
+                        <li>Marking elevator's direction and coloring suspension ropes (free of charge).</li>
+                        <li>Replacement of worn cabin-counterweight suspension ropes, cones, and clamps.</li>
+                        <li>Sealing of the machine.</li>
+                        <li>Repair of the machine pulley.</li>
+                        <li>Replacement of the control panel with a new IKAROS microprocessor panel featuring an inverter.</li>
+                        <li>Installation of new flexible cable and replacement of old floor switches.</li>
+                        <li>New panel features: independent up/down stop adjustment, fault diagnosis in Greek, fire safety operation, etc.</li>
+                        <li>Installation of a mushroom stop button near the motor.</li>
+                        <li>Replacement of locks with new type locks.</li>
+                        <li>Installation of cabin and counterweight buffers.</li>
+                        <li>Installation of a telephone device in the cabin.</li>
+                        <li>Installation of counterweight sheet metal.</li>
+                        <li>Installation of a mushroom stop button in the pit bottom.</li>
+                        <li>Restoration of shaft lighting.</li>
+                        <li>Cleaning and adjustment of the safety gear (if adjustable).</li>
+                        <li>Installation of an apron with stiffeners in the cabin.</li>
+                        <li>Installation of a new revision (inspection control box) on the cabin roof.</li>
+                        <li>Replacement of the articulated joint on the cabin roof.</li>
+                        <li>Replacement of the speed governor.</li>
+                        <li>Replacement of travel limit switches.</li>
+                        <li>Restoration of the bell's operation.</li>
+                        <li>Installation of a safety light in the cabin.</li>
+                        <li>Replacement of the pulley room revision.</li>
+                        <li>Restoration of pulley room lighting.</li>
+                        <li>Inspection by a certification body for certificate issuance.</li>
+                    </ul>
+
+                    <h3>Optional Works and Prices</h3>
+                    <ul>
+                        <li>Installation of an automatic release system for entrapment: €380.00 + 24% VAT = <strong>€471.20</strong>.</li>
+                        <li>Installation of an automatic bus-type cabin door: €750.00 + 24% VAT = <strong>€930.00</strong>.</li>
+                        <li>Removal of existing cabin and installation of a new "KIRKI" cabin: €1,800.00 + 24% VAT = <strong>€2,232.00</strong>.</li>
+                        <li>Replacement of external button panels: €470.00 + 24% VAT = <strong>€582.80</strong>.</li>
+                        <li>Replacement of cabin button panel: €420.00 + 24% VAT = <strong>€520.80</strong>.</li>
+                    </ul>
+
+                    <h3>Other Information</h3>
+                    <ul>
+                        <li>Monthly maintenance, supervision, and insurance: €43.00 (VAT included).</li>
+                        <li>Warranty: 5 years (conditional on maintenance by their office).</li>
+                        <li>Payment: 50% advance, 50% in 4 equal monthly installments.</li>
+                    </ul>
+                `
+            },
+            {
+                id: "anodiki",
+                companyName_el: "ANODIKI TECHNIKI (ΑΝΟΔΙΚΗ ΤΕΧΝΙΚΗ)",
+                companyName_en: "ANODIKI TECHNIKI",
+                content_el: `
+                    <h3>Συνολική Αξία Προσφοράς</h3>
+                    <p>€4,898.00 (συμπεριλαμβανομένου ΦΠΑ 24%).</p>
+
+                    <h3>Αναλυτική Περιγραφή Τιμών που Περιλαμβάνονται στην Προσφορά</h3>
+                    <p>Το κόστος για τα αναφερόμενα υλικά και υπηρεσίες είναι €3,950.00 + 24% ΦΠΑ, συνολικά €4,898.00. Η τιμή αυτή περιλαμβάνει την εργασία εγκατάστασης, τις εισφορές κοινωνικής ασφάλισης (ΙΚΑ), την απομάκρυνση παλαιών υλικών και την ασφάλιση αστικής ευθύνης για τον ανελκυστήρα.</p>
+
+                    <h3>Εργασίες που Περιλαμβάνονται στην Προσφορά</h3>
+                    <ul>
+                        <li>Χρωματική σήμανση μεταξύ τροχαλίας και συρματόσχοινων.</li>
+                        <li>Προμήθεια και εγκατάσταση πρίζας στο μηχανοστάσιο.</li>
+                        <li>Προμήθεια και αντικατάσταση του Ρυθμιστή Ταχύτητας (0.80-0.90 m/sec CE).</li>
+                        <li>Προμήθεια και αντικατάσταση του Γενικού Πίνακα Ελέγχου (CONTROLLER) - μάρκας VASSLER.</li>
+                        <li>Προμήθεια και αντικατάσταση του εύκαμπτου καλωδίου 24 αγωγών.</li>
+                        <li>Προμήθεια και εγκατάσταση διαχωριστικής λαμαρίνας μεταξύ θαλάμου και αντιβάρων.</li>
+                        <li>Εγκατάσταση νέου τύπου πίνακα συντήρησης στην οροφή του θαλάμου.</li>
+                        <li>Προμήθεια και εγκατάσταση μονάδας ελέγχου στον πυθμένα του φρεατίου.</li>
+                        <li>Εγκατάσταση επαρκούς φωτισμού στο φρεάτιο και το μηχανοστάσιο.</li>
+                        <li>Προμήθεια και εγκατάσταση φωτιστικού ασφαλείας με μπαταρία και κουδουνιού στην μπουτονιέρα.</li>
+                        <li>Προμήθεια και εγκατάσταση επαφής ασφαλείας για τερματικούς διακόπτες.</li>
+                        <li>Καθαρισμός και ρύθμιση της αρπάγης.</li>
+                        <li>Προμήθεια και αντικατάσταση κώνων σύνδεσης συρματόσχοινων.</li>
+                        <li>Τοποθέτηση απαραίτητων σημάνσεων.</li>
+                        <li>Προμήθεια και αντικατάσταση κλειδαριών θυρών φρεατίου με νέου τύπου (CE).</li>
+                        <li>Ανάληψη έκδοσης Πιστοποιητικού Καλής Λειτουργίας.</li>
+                        <li>Υποβολή του πιστοποιητικού στα μητρώα του Υπουργείου Ανάπτυξης.</li>
+                    </ul>
+
+                    <h3>Προαιρετικές Εργασίες και Τιμές</h3>
+                    <ul>
+                        <li>Νέος αυτόματος πίνακας με INVERTER VVVF: Επιπλέον €600.00 + 24% ΦΠΑ = <strong>€744.00</strong>.</li>
+                        <li>Αυτόματη Συσκευή Απεγκλωβισμού: Επιπλέον €600.00 + 24% ΦΠΑ = <strong>€744.00</strong>.</li>
+                        <li>Αντικατάσταση θαλάμου: Επιπλέον €1,200.00 + 24% ΦΠΑ = <strong>€1,488.00</strong>.</li>
+                        <li>Αντικατάσταση μπουτονιέρας θαλάμου: Επιπλέον €350.00 + 24% ΦΠΑ = <strong>€434.00</strong>.</li>
+                        <li>Αντικατάσταση εξωτερικών μπουτονιέρων ορόφων: Επιπλέον €450.00 + 24% ΦΠΑ = <strong>€558.00</strong>.</li>
+                        <li>Πιθανή αντικατάσταση συρματόσχοινων: €700.00 + 24% ΦΠΑ = <strong>€868.00</strong>.</li>
+                    </ul>
+
+                    <h3>Άλλες Πληροφορίες</h3>
+                    <ul>
+                        <li>Εάν ο φορέας πιστοποίησης ζητήσει επιπλέον στοιχεία, θα εκδοθεί νέα προσφορά.</li>
+                        <li>Δεν περιλαμβάνονται οικοδομικές εργασίες.</li>
+                        <li>Μηνιαία συντήρηση: €35.00 + 24% ΦΠΑ = €43.40.</li>
+                        <li>Εγγύηση: 5 έτη για υλικά (ισχύουν εξαιρέσεις).</li>
+                        <li>Πληρωμή: 50% με την υπογραφή, υπόλοιπο + ΦΠΑ με την ολοκλήρωση.</li>
+                        <li>Ισχύς προσφοράς: 10 ημέρες.</li>
+                        <li>Χρόνος παράδοσης: 3-5 εργάσιμες ημέρες.</li>
+                    </ul>
+                `,
+                content_en: `
+                    <h3>Total Value of the Offer</h3>
+                    <p>€4,898.00 (including 24% VAT).</p>
+
+                    <h3>Analytic Description of Prices Included in the Offer</h3>
+                    <p>The cost for the listed materials and services is €3,950.00 + 24% VAT, totaling €4,898.00. This price includes installation labor, social security contributions (IKA), removal of old materials, and civil liability insurance for the elevator.</p>
+
+                    <h3>Works Included in the Offer</h3>
+                    <ul>
+                        <li>Color-marking between pulley and wire ropes.</li>
+                        <li>Supply and installation of a power socket in the machine room.</li>
+                        <li>Supply and replacement of the Speed Governor (0.80-0.90 m/sec CE).</li>
+                        <li>Supply and replacement of the General Control Panel (CONTROLLER) - VASSLER brand.</li>
+                        <li>Supply and replacement of the 24-strand flexible cable.</li>
+                        <li>Supply and installation of a partition plate between cabin and counterweights.</li>
+                        <li>Installation of a new-type maintenance button panel on cabin roof.</li>
+                        <li>Supply and installation of a control unit in the pit bottom.</li>
+                        <li>Installation of adequate lighting in shaft and machine room.</li>
+                        <li>Supply and installation of a battery-operated safety light and bell in the button panel.</li>
+                        <li>Supply and installation of a safety contact for limit switches.</li>
+                        <li>Cleaning and adjustment of the safety gear.</li>
+                        <li>Supply and replacement of wire rope connection cones.</li>
+                        <li>Placement of necessary markings.</li>
+                        <li>Supply and replacement of shaft door locks with new type (CE).</li>
+                        <li>Obtaining a Certificate of Good Operation.</li>
+                        <li>Submission of the certificate to Ministry of Development registries.</li>
+                    </ul>
+
+                    <h3>Optional Works and Prices</h3>
+                    <ul>
+                        <li>New automatic panel with INVERTER VVVF: Additional €600.00 + 24% VAT = <strong>€744.00</strong>.</li>
+                        <li>Automatic Rescue Device: Additional €600.00 + 24% VAT = <strong>€744.00</strong>.</li>
+                        <li>Cabin replacement: Additional €1,200.00 + 24% VAT = <strong>€1,488.00</strong>.</li>
+                        <li>Replacement of cabin button panel: Additional €350.00 + 24% VAT = <strong>€434.00</strong>.</li>
+                        <li>Replacement of external floor button panels: Additional €450.00 + 24% VAT = <strong>€558.00</strong>.</li>
+                        <li>Possible replacement of wire ropes: €700.00 + 24% VAT = <strong>€868.00</strong>.</li>
+                    </ul>
+
+                    <h3>Other Information</h3>
+                    <ul>
+                        <li>If the certification body requests additional items, a new offer will be issued.</li>
+                        <li>Excludes construction work.</li>
+                        <li>Monthly maintenance: €35.00 + 24% VAT = €43.40.</li>
+                        <li>Warranty: 5 years for materials (exclusions apply).</li>
+                        <li>Payment: 50% on signing, rest + VAT on completion.</li>
+                        <li>Offer validity: 10 days.</li>
+                        <li>Delivery time: 3-5 working days.</li>
+                    </ul>
+                `
+            },
+            {
+                id: "orangelift",
+                companyName_el: "OrangeLift service (ORANGELIFT ΜΟΝΟΠΡΟΣΩΠΗ Α.Ε.)",
+                companyName_en: "OrangeLift service (ORANGELIFT S.A.)",
+                content_el: `
+                    <h3>Συνολική Αξία Προσφοράς (Κύρια Αναβάθμιση - Πρόταση Α')</h3>
+                    <p>€5,790.00 (συμπεριλαμβανομένου ΦΠΑ 24%).</p>
+
+                    <h3>Αναλυτική Περιγραφή Τιμών που Περιλαμβάνονται στην Προσφορά (Πρόταση Α')</h3>
+                    <p>Πρόταση Α' - Αναβάθμιση/Επισκευή Ανελκυστήρα: €5,790.00 (συμπεριλαμβανομένου ΦΠΑ 24%). Η τιμή αυτή περιλαμβάνει τη μελέτη και σύνταξη τεχνικού φακέλου από μηχανικό της εταιρείας για υποβολή στο αρμόδιο δημοτικό μητρώο.</p>
+
+                    <h3>Εργασίες που Περιλαμβάνονται στην Προσφορά (Πρόταση Α' - Κύρια Αναβάθμιση)</h3>
+                    <p><strong>Μηχανοστάσιο:</strong> Αντικατάσταση πίνακα αυτοματισμού με νέο πίνακα inverter (V.V.V.F.), αντικατάσταση καλωδίωσης, αντικατάσταση ηλεκτρολογικού πίνακα μηχανοστασίου.</p>
+                    <p><strong>Μηχανισμός Κίνησης:</strong> Εγκατάσταση διατάξεων ασφαλείας στην τροχαλία τριβής, επισκευή μοχλού φρένου.</p>
+                    <p><strong>Εργασίες Φρεατίου:</strong> Αντικατάσταση οροφοδιακοπτών, τερματικών διακοπτών, καλωδίωσης, κουτιού διακλάδωσης, κλειδαριών θυρών. Εγκατάσταση "Stop" στον πυθμένα, φωτισμού LED, ζυγοστάθμιση, προσκρουστήρες, καθαρισμός/ρύθμιση αρπάγης.</p>
+                    <p><strong>Εργασίες Θαλάμου:</strong> Αντικατάσταση σειρήνας, εγκατάσταση φωτισμού ασφαλείας, "ψευδοπατώματος", αντικατάσταση πίνακα ελέγχου επιθεώρησης, εγκατάσταση ποδιάς.</p>
+                    <p><strong>Εργασίες Τροχαλιοστασίου:</strong> Αντικατάσταση ρυθμιστή ταχύτητας, εγκατάσταση πίνακα ελέγχου επιθεώρησης, φωτισμού.</p>
+
+                    <h3>Προαιρετικές Εργασίες και Τιμές</h3>
+                    <ul>
+                        <li><strong>Πρόταση Β' - Αυτόματο Σύστημα Απεγκλωβισμού:</strong> €558.00 (συμπεριλαμβανομένου ΦΠΑ 24%).</li>
+                        <li><strong>Πρόταση Γ' - Αισθητική Ανακαίνιση:</strong> €2,480.00 (συμπεριλαμβανομένου ΦΠΑ 24%). Περιλαμβάνει νέα επένδυση θαλάμου, οροφή, καθρέφτη, δάπεδο, κολώνες, σοβατεπί, αντικατάσταση μπουτονιέρας θαλάμου και ορόφων.</li>
+                    </ul>
+
+                    <h3>Άλλες Πληροφορίες</h3>
+                    <ul>
+                        <li>Η κύρια προσφορά δεν περιλαμβάνει πρόσθετες απαιτήσεις από επιθεωρητή που δεν αναφέρονται.</li>
+                        <li>Εγγύηση: 5 έτη (υπό την προϋπόθεση συντήρησης από την OrangeLift· ισχύουν εξαιρέσεις).</li>
+                        <li>Πληρωμή: 50% προκαταβολή, 50% σε έξι (6) ισόποσες μηνιαίες δόσεις.</li>
+                        <li>Χρόνος Παράδοσης: 30-40 εργάσιμες ημέρες.</li>
+                        <li>Ισχύς Προσφοράς: 60 ημέρες.</li>
+                    </ul>
+                `,
+                content_en: `
+                    <h3>Total Value of the Offer (Main Upgrade - Proposal A')</h3>
+                    <p>€5,790.00 (including 24% VAT).</p>
+
+                    <h3>Analytic Description of Prices Included in the Offer (Proposal A')</h3>
+                    <p>Proposal A' - Elevator Upgrade/Repair: €5,790.00 (24% VAT included). This price includes the study and compilation of a technical file by their engineer for submission to the relevant municipal registry.</p>
+
+                    <h3>Works Included in the Offer (Proposal A' - Main Upgrade)</h3>
+                    <p><strong>Machine Room:</strong> Replacement of automation panel with a new inverter (V.V.V.F.) panel, replacement of wiring, replacement of machine room electrical panel.</p>
+                    <p><strong>Drive Mechanism:</strong> Installation of safety devices on traction sheave, repair of brake lever.</p>
+                    <p><strong>Shaft Works:</strong> Replacement of floor switches, limit switches, wiring, junction box, door locks. Installation of "Stop" at pit bottom, LED lighting, balancing, buffers, cleaning/adjustment of safety gear.</p>
+                    <p><strong>Cabin Works:</strong> Replacement of danger siren, installation of safety lighting, "false floor", replacement of inspection control panel, installation of apron.</p>
+                    <p><strong>Pulley Room Works:</strong> Replacement of speed governor, installation of inspection control panel, lighting.</p>
+
+                    <h3>Optional Works and Prices</h3>
+                    <ul>
+                        <li><strong>Proposal B' - Automatic Rescue System (power outage):</strong> €558.00 (including 24% VAT).</li>
+                        <li><strong>Proposal Γ' - Aesthetic Renovation:</strong> €2,480.00 (including 24% VAT). Includes new cabin lining, ceiling, mirror, flooring, columns, skirting, replacement of cabin and floor button panels.</li>
+                    </ul>
+
+                    <h3>Other Information</h3>
+                    <ul>
+                        <li>Main offer excludes additional requirements from inspector not listed.</li>
+                        <li>Warranty: 5 years (conditional on maintenance by OrangeLift; exclusions apply).</li>
+                        <li>Payment: 50% advance, 50% in six (6) equal monthly installments.</li>
+                        <li>Delivery Time: 30-40 working days.</li>
+                        <li>Offer Validity: 60 days.</li>
+                    </ul>
+                `
+            }
+        ];
+
+        function renderSummaries() {
+            const container = document.getElementById('summaries-container');
+            container.innerHTML = ''; // Clear previous content
+
+            offerSummariesData.forEach(summary => {
+                const sectionEl = document.createElement('section');
+                sectionEl.className = 'summary-section';
+                sectionEl.id = `summary-${summary.id}`;
+
+                const titleEl = document.createElement('h2');
+                const titleEl_el = document.createElement('span');
+                titleEl_el.className = 'lang-el-text';
+                titleEl_el.textContent = summary.companyName_el;
+                const titleEl_en = document.createElement('span');
+                titleEl_en.className = 'lang-en-text';
+                titleEl_en.textContent = summary.companyName_en;
+                titleEl.appendChild(titleEl_el);
+                titleEl.appendChild(titleEl_en);
+
+                const contentDiv_el = document.createElement('div');
+                contentDiv_el.className = 'lang-el-text';
+                contentDiv_el.innerHTML = summary.content_el;
+
+                const contentDiv_en = document.createElement('div');
+                contentDiv_en.className = 'lang-en-text';
+                contentDiv_en.innerHTML = summary.content_en;
+
+                sectionEl.appendChild(titleEl);
+                sectionEl.appendChild(contentDiv_el);
+                sectionEl.appendChild(contentDiv_en);
+                container.appendChild(sectionEl);
+            });
+            updateTextElements(); // Apply initial language visibility
+        }
+
+
+        function updateTextElements() {
+            document.querySelectorAll('.lang-el-text, .lang-en-text').forEach(el => {
+                el.classList.remove('active', 'active-inline');
+                if (el.classList.contains(`lang-${currentLanguage}-text`)) {
+                    if (el.style.display === 'inline' || el.classList.contains('active-inline-explicit')) { // Check for explicit inline or if already set
+                        el.classList.add('active-inline');
+                    } else {
+                        el.classList.add('active');
+                    }
+                }
+            });
+            // Ensure only one version of page title is active
+            document.querySelectorAll('.page-title .lang-el-text, .page-title .lang-en-text').forEach(el => {
+                 el.classList.remove('active');
+                 if(el.classList.contains(`lang-${currentLanguage}-text`)) el.classList.add('active');
+            });
+
+            // For elements that should always be inline when active
+            document.querySelectorAll('.lang-el-text.active-inline, .lang-en-text.active-inline').forEach(el => {
+                if (el.classList.contains(`lang-${currentLanguage}-text`)) {
+                    el.style.display = 'inline';
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+             document.getElementById('document-source-name').textContent = "elevator_offers_summary_02";
+        }
+
+        document.getElementById('lang-el-btn').addEventListener('click', () => {
+            currentLanguage = 'el';
+            document.documentElement.lang = 'el';
+            document.getElementById('lang-el-btn').classList.add('active');
+            document.getElementById('lang-en-btn').classList.remove('active');
+            updateTextElements();
+        });
+
+        document.getElementById('lang-en-btn').addEventListener('click', () => {
+            currentLanguage = 'en';
+            document.documentElement.lang = 'en';
+            document.getElementById('lang-en-btn').classList.add('active');
+            document.getElementById('lang-el-btn').classList.remove('active');
+            updateTextElements();
+        });
+        
+        renderSummaries(); // Initial render
+        // Mark specific spans in the footer to be inline
+        document.querySelectorAll('footer .lang-el-text, footer .lang-en-text').forEach(span => {
+            span.classList.add('active-inline-explicit');
+        });
+        updateTextElements(); // Re-apply after marking for inline
+    </script>
+</body>
+</html>
